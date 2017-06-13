@@ -568,8 +568,7 @@ data2 <- read.csv(text = "Data/df.csv")
 <<<<<<< HEAD
 ?table() 	# build a table of counts at each factor combination
 ?is.na() 	# figure out if there are any NA’s in the object
-=======
-?table() 	# build a table of counts at each factor combination  ?is.na() 	# figure out if there are any NA’s in the object
->>>>>>> 3df7b892b97c698cc1f9f6add075deb16c979e4e
+?table() 	# build a table of counts at each factor combination
+?is.na() 	# figure out if there are any NA’s in the object
 
 ## Slide 75 ------------------------------------------------------------
