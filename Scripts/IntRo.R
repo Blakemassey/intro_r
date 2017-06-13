@@ -565,7 +565,11 @@ data2 <- read.csv(text = "Data/df.csv")
 ?summary() 	# gives summary of data
 ?unique() 	# gives all unique values
 ?class() 	# tells you the class of the data
+<<<<<<< HEAD
 ?table() 	# build a table of counts at each factor combination
 ?is.na() 	# figure out if there are any NA’s in the object
+=======
+?table() 	# build a table of counts at each factor combination  ?is.na() 	# figure out if there are any NA’s in the object
+>>>>>>> 3df7b892b97c698cc1f9f6add075deb16c979e4e
 
 ## Slide 75 ------------------------------------------------------------
