@@ -21,11 +21,11 @@ swirl()
 bye()
 
 # Examples of Basic R Syntax
-5			# a constant
-my_sqrt 	# a variable
-mean(z)	  	# a function (which is also an object!)
-?('<-')		# an operator (a type of function)
-?('if')		# a control statement (a type of function)
+5			   # a constant
+my_num   # a variable
+sqrt(25)	# a function (which is also an object!)
+?'<-'		 # an operator (a type of function)
+?'if'		 # a control statement (a type of function)
 
 # Constants
 42		  # built-in constants (numeric)
@@ -54,7 +54,7 @@ Inf  	# infinity
 # Built-in Constants (Numeric)
 1.3				# numeric sequence with or without a decimal
 5L				# L suffix means coerce to integer class
-2.1e-10			# numeric seq, followed by e or E, then 10 or -10
+2.1e-4		# numeric seq, followed by e or E, then n or -n
 pi				# 3.14159
 
 # Built-in Constants (Characters)
@@ -65,7 +65,7 @@ month.abb		# Month names abbreviations (3 letters)
 
 int <- 5L    # an L suffix coerces numeric elements to integer
 class(int)
-num <- c(1.1, 9, 3.14)
+num <- c(1.1, 4, 77)   # 'c' is function that combines elements
 class(num)
 
 alpha <- c("m", "a", "s", "s")
@@ -94,6 +94,14 @@ is.character(c("Amherst", "Site 27", "Bombus"))
 # Tests for NA
 is.na(c(TRUE, FALSE, FALSE))
 is.na(c(1L, 6L, FALSE, 17L))
+
+# Date Classes
+as.Date("1995-02-16")
+as.POSIXct("1995-02-16 12:45:30", tz = "GMT")
+
+now <- Sys.time()
+class(now)
+
 
 # R Base Functions
 builtins() 		# list all built-in objects (mostly functions!)
@@ -294,7 +302,6 @@ vec <- seq(from = 4, to = 16, by = 4)
 
 # Create a matrix
 mt <- matrix(1:16, nrow=4)
-
 
 # Create a data frame
 df <- data.frame(x = c(4:7), y = c(letters[1:4]), x2 = c(11:14),
