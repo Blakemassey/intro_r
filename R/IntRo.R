@@ -646,7 +646,14 @@ gg1 <- ggplot(data = data, aes(x = day, y = value, color = dose)) +
   xlab("Days of Treatment") + ylab("Blood Value")
 gg1
 
-gg2 <- gg1 + geom_line(aes(group = id, linetype = dose), size = 1)
+data$dose <- factor(data$dose)
+gg1 <- ggplot(data = data, aes(x = day, y = value, color = dose)) +
+  geom_point(size = 3) + ggtitle("Blood Iron by Treatment Dose") +
+  xlab("Days of Treatment") + ylab("Blood Value")
+gg1
+
+gg2 <- gg1 + geom_line(aes(group = id, linetype = dose), size = 1) +
+  theme(plot.title = element_text(hjust = 0.5))
 gg2
 
 gg3 <- gg2 + geom_smooth(method = "glm", aes(group = dose), formula = y ~ x)
@@ -655,7 +662,7 @@ gg3
 gg4 <- gg3 + facet_grid(. ~ dose)
 gg4
 
-gg5 <- gg4 + facet_grid(sex ~ dose)
+gg5 <- gg4 + facet_grid(sex ~ dose) + ylab("Hemoglobin (g/dl)")
 gg5
 
 ## To create fake blood lead data for ggplot
@@ -664,24 +671,26 @@ library(dplyr)
 library(tidyr)
 library(purrr)
 
-(id <- 1:30)
-(sex <- c(sample(c("male", "female"), 30, replace = TRUE)))
-(start <- rnorm(30, 30, .5))
-(dose <- c(rep(seq(0, .2, by = .05), each = 6)))
+id <- 1:40
+sex <- c(sample(c("male", "female"), 40, replace = TRUE))
+dose <- c(rep(seq(0, .2, by = .05), each = 8))
+df_start <- tibble(id, sex, dose)
 
-df_start <- tibble(id, sex, start, dose)
-
-CreateFakeData <- function(start, sex, dose){
-  sex <- ifelse(sex == "female", 1, .75)
-  day <- c(0, sample(3:5, 1), sample(7:10, 1), sample(12:15, 1), sample(18:21,1))
-  value <- c(start + sex*dose*day + rnorm(n = length(day), sd = .1))
+CreateFakeData <- function(sex, dose){
+  start <- ifelse(sex == "female", sample(seq(10, 12, by =.01), 1),
+    sample(seq(11, 13.5, by =.01), 1))
+  sex_effect <- ifelse(sex == "female", 1, .75)
+  day <- c(0, sample(3:5, 1), sample(7:10, 1), sample(12:15, 1),
+    sample(18:21,1))
+  value <- c(start + sex_effect*dose*day + rnorm(n = length(day), sd = .1))
   results <- tibble(day = day, value = value)
   return(results)
 }
 
 df <- df_start %>%
-  mutate(results = pmap(.l = list(start, sex, dose), .f = CreateFakeData)) %>%
+  mutate(results = map2(sex, dose, CreateFakeData)) %>%
   mutate(dose = factor(dose*200)) %>%
   unnest()
 
 write.csv(df, "Data/blood_iron.csv", row.names = FALSE)
+theme_set(theme_gray(base_size = 18))
